@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { login } from './api'; // Importa la función de login
+import { Link } from 'react-router-dom';
+import { login } from './api';
 import './Login.css';
 
 const Login = () => {
@@ -10,11 +11,11 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const token = await login(username, password); // Llama a la función de login
-            localStorage.setItem('token', token); // Almacena el token
-            window.location.href = '/'; // Redirige a la página principal
+            const token = await login(username, password); 
+            localStorage.setItem('token', token); 
+            window.location.href = '/'; 
         } catch (err) {
-            setError('Error en la autenticación. Verifica tus credenciales.'); // Manejo de errores
+            setError('Error en la autenticación. Verifica tus credenciales.'); 
         }
     };
 
@@ -43,9 +44,9 @@ const Login = () => {
                 {error && <p className="error">{error}</p>}
                 <button type="submit">Login</button>
             </form>
+            <p>¿No tienes cuenta? <Link to="/signup">Crea una cuenta</Link></p>
         </div>
     );
 };
 
 export default Login;
-

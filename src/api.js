@@ -1,9 +1,9 @@
-const API_URL = 'https://sandbox.academiadevelopers.com/docs';
+const API_URL = 'https://sandbox.academiadevelopers.com/docs/'; // Ajusta la URL base según la documentación
 
 // Función para autenticar al usuario y obtener un token
 export const login = async () => {
-    const username = '31733731'; // Mi usuario
-    const password = 'VZcYPByUWK'; // Mi contraseña
+    const username = '31733731'; // Tu usuario
+    const password = 'VZcYPByUWK'; // Tu contraseña
 
     const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
@@ -21,73 +21,92 @@ export const login = async () => {
     return data.token; // Devuelve el token
 };
 
-// Función para obtener las noticias, utilizando el token para autenticación
-export const fetchNews = async () => {
-    const token = await login(); // Autenticación previa
-    const response = await fetch(`${API_URL}/news`, {
+// Función para obtener todas las categorías de artículos
+export const fetchCategories = async () => {
+    const token = await login();
+    const response = await fetch(`${API_URL}/infosphere/article-categories/`, {
         method: 'GET',
         headers: {
-            'Authorization': `Bearer ${token}`, // Incluye el token en la cabecera
-        },
-    });
-
-    if (!response.ok) {
-        throw new Error('Error al obtener noticias'); // Manejo de error
-    }
-
-    return await response.json(); // Devuelve los datos de la respuesta
-};
-
-// Función para crear una nueva noticia
-export const createNews = async (title, content) => {
-    const token = await login(); // Autenticación previa
-    const response = await fetch(`${API_URL}/news`, {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${token}`, // Incluye el token en la cabecera
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title, content }), // Enviar el título y contenido de la noticia
     });
 
     if (!response.ok) {
-        throw new Error('Error al crear la noticia'); // Manejo de error
+        throw new Error('Error al obtener categorías');
     }
 
     return await response.json();
 };
-// Función para actualizar una noticia existente
-export const updateNews = async (newsId, title, content) => {
-    const token = await login(); // Autenticación previa
-    const response = await fetch(`${API_URL}/news/${newsId}`, {
-        method: 'PUT',
+
+// Función para crear una nueva categoría de artículos
+export const createCategory = async (name) => {
+    const token = await login();
+    const response = await fetch(`${API_URL}/infosphere/article-categories/`, {
+        method: 'POST',
         headers: {
-            'Authorization': `Bearer ${token}`, // Incluye el token en la cabecera
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title, content }), // Enviar los nuevos datos de la noticia
+        body: JSON.stringify({ name }),
     });
 
     if (!response.ok) {
-        throw new Error('Error al actualizar la noticia'); // Manejo de error
+        throw new Error('Error al crear la categoría');
     }
 
-    return await response.json(); // Devuelve la respuesta del servidor
+    return await response.json();
 };
 
-// Función para eliminar una noticia
-export const deleteNews = async (newsId) => {
-    const token = await login(); // Autenticación previa
-    const response = await fetch(`${API_URL}/news/${newsId}`, {
+// Función para actualizar una categoría de artículos existente
+export const updateCategory = async (id, name) => {
+    const token = await login();
+    const response = await fetch(`${API_URL}/infosphere/article-categories/${id}/`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Error al actualizar la categoría');
+    }
+
+    return await response.json();
+};
+
+// Función para eliminar una categoría de artículos
+export const deleteCategory = async (id) => {
+    const token = await login();
+    const response = await fetch(`${API_URL}/infosphere/article-categories/${id}/`, {
         method: 'DELETE',
         headers: {
-            'Authorization': `Bearer ${token}`, // Incluye el token en la cabecera
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
         },
     });
 
     if (!response.ok) {
-        throw new Error('Error al eliminar la noticia'); // Manejo de error
+        throw new Error('Error al eliminar la categoría');
     }
 
-    return await response.json(); // Devuelve la respuesta del servidor
+    return await response.json();
+};
+//Funcion para crear usuario 
+export const createUser = async ({ username, dni, email, password }) => {
+    const response = await fetch(`${API_URL}/signup`, { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, dni, email, password }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Error al crear la cuenta');
+    }
+
+    return await response.json();
 };

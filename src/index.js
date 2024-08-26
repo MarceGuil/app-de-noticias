@@ -7,9 +7,10 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />  // Renderiza el componente App
+    <App /> {/* Renderiza el componente App */}
   </React.StrictMode>
 );
 
 // Reporte de rendimiento opcional
 reportWebVitals();
+

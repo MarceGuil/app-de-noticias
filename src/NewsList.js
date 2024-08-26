@@ -1,38 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { fetchNews } from './api';
+import { fetchNews } from './api'; // Importa la función de api.js
+import './NewsList.css';
 
 const NewsList = () => {
-    const [news, setNews] = useState([]); // Estado para almacenar las noticias
-    const [error, setError] = useState(''); // Estado para manejar errores
+    const [news, setNews] = useState([]);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         const getNews = async () => {
             try {
                 const data = await fetchNews(); // Llama a la función para obtener noticias
-                setNews(data); // Establece las noticias en el estado
+                setNews(data); // Establece el estado de las noticias
             } catch (err) {
-                setError(err.message); // Maneja el error
+                setError(err.message); // Manejo de errores
             }
         };
 
-        getNews(); // Llama a la función cuando el componente se monta
+        getNews(); // Llama a la función para obtener noticias
     }, []);
 
     return (
-        <div>
-            <h1>Lista de Noticias</h1>
+        <div className="news-list">
+            <h1>Últimas Noticias</h1>
             {error && <p style={{ color: 'red' }}>{error}</p>} {/* Mostrar mensaje de error */}
-            <ul>
-                {news.length > 0 ? (
-                    news.map(item => (
-                        <li key={item.id}>{item.title}</li> // Asume que cada noticia tiene un id y un título
-                    ))
-                ) : (
-                    <p>No hay noticias disponibles.</p> // Mensaje si no hay noticias
-                )}
-            </ul>
+            <div className="card-container">
+                {news.map(item => (
+                    <div className="news-card" key={item.id}>
+                        <img src={item.image} alt={item.title} /> {/* Asegúrate de que esto sea correcto */}
+                        <h2>{item.title}</h2>
+                        <p>{item.description}</p>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
 
 export default NewsList; // Exporta el componente
+

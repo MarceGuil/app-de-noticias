@@ -1,21 +1,28 @@
-
 import React from 'react';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
-import Login from './Login'; // Asegúrate de que el componente Login.js esté en la misma carpeta
-import NewsList from './NewsList'; // Importa el componente de lista de noticias (si ya lo tienes)
+import Login from './Login';
+import NewsList from './NewsList';
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Switch>
-          <Route path="/login" component={Login} /> {/* Ruta para el inicio de sesión */}
-          <Route path="/" component={NewsList} /> {/* Ruta para mostrar las noticias */}
-        </Switch>
+        <div className="navbar">
+          <Link to="/">Home</Link>
+          <Link to="/login">Login</Link>
+        </div>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<NewsList />} />
+        </Routes>
+        <div className="footer">
+          © 2024 Your News App
+        </div>
       </div>
     </Router>
   );
 }
 
 export default App;
+

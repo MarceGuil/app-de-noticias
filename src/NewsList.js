@@ -1,40 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { fetchNews } from './api'; // Importa la función de api.js
-import './NewsList.css';
+import { fetchNews } from './api'; // Importa la función fetchNews desde api.js
 
-const NewsList = () => {
-    const [news, setNews] = useState([]);
-    const [error, setError] = useState('');
+// Definición del componente NewsList
+function NewsList() {
+  const [news, setNews] = useState([]); // Estado para almacenar las noticias
+  const [error, setError] = useState(''); // Estado para almacenar errores
 
-    useEffect(() => {
-        const getNews = async () => {
-            try {
-                const data = await fetchNews(); // Llama a la función para obtener noticias
-                setNews(data); // Establece el estado de las noticias
-            } catch (err) {
-                setError(err.message); // Manejo de errores
-            }
-        };
+  // useEffect para ejecutar la función cuando el componente se monta
+  useEffect(() => {
+    const getNews = async () => {
+      try {
+        const data = await fetchNews(); // Llama a la API para obtener las noticias
+        setNews(data); // Almacena las noticias en el estado
+      } catch (error) {
+        setError('Error al cargar las noticias.'); // Maneja errores
+      }
+    };
 
-        getNews(); // Llama a la función para obtener noticias
-    }, []);
+    getNews(); // Ejecuta la función para obtener las noticias
+  }, []); // El arreglo vacío significa que este efecto se ejecutará solo una vez al montar el componente
 
-    return (
-        <div className="news-list">
-            <h1>Últimas Noticias</h1>
-            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Mostrar mensaje de error */}
-            <div className="card-container">
-                {news.map(item => (
-                    <div className="news-card" key={item.id}>
-                        <img src={item.image} alt={item.title} /> {/* Asegúrate de que esto sea correcto */}
-                        <h2>{item.title}</h2>
-                        <p>{item.description}</p>
-                    </div>
-                ))}
-            </div>
+  // Si hay un error, lo mostramos
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  // Renderizamos las noticias
+  return (
+    <div>
+      <h1>Últimas Noticias</h1>
+      {news.map(article => (
+        <div key={article.id}>
+          <h2>{article.title}</h2>
+          <p>{article.body}</p> {/* Asume que 'body' es el contenido de la noticia */}
         </div>
-    );
-};
+      ))}
+    </div>
+  );
+}
 
-export default NewsList; // Exporta el componente
+export default NewsList;  // Exporta el componente
+
 

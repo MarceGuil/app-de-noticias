@@ -1,0 +1,27 @@
+.header {
+    background-color: #333;
+    padding: 10px;
+}
+
+.header ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.header ul li {
+    display: inline;
+}
+
+.header ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+}
+
+.header ul li a:hover {
+    background-color: #555;
+}

@@ -1,0 +1,29 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.article-summary {
+    border-bottom: 1px solid #ccc;
+    padding: 20px;
+    width: 80%;
+}
+
+.article-summary h2 {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.article-summary p {
+    font-family: 'Arial', sans-serif;
+    color: #555;
+}
+
+.article-summary a {
+    text-decoration: none;
+}
+
+.article-summary a:hover {
+    background-color: #f0f0f0;
+}
